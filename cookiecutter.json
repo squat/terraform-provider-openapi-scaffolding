@@ -1,0 +1,11 @@
+{
+  "github_username": "",
+  "cloud_provider": "",
+  "cloud_provider_url": "",
+  "openapi_specification_url": "",
+  "version": "0.0.1",
+  "_copy_without_render": [
+    ".goreleaser.yml",
+    ".github"
+  ]
+}
