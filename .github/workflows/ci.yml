@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+  schedule:
+  - cron:  '0 0 * * *'
+  workflow_dispatch:
+
+jobs:
+
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: "1.21"
+    - name: Install Cruft
+      run: pipx install cruft
+    - name: Generate
+      env:
+        SPEAKEASY_API_KEY: ${{ secrets.SPEAKEASY_API_KEY }}
+      run: |
+        cd $(mktemp -d)
+        cruft create $GITHUB_WORKSPACE << EOF
+        squat
+        Hashicups
+        https://example.com/
+        https://raw.githubusercontent.com/speakeasy-sdks/terraform-provider-hashicups/main/hashicups.yaml
+
+        EOF
+        cd terraform-provider-hashicups
+        make generate
