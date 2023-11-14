@@ -31,7 +31,7 @@ Terraform searches for the `.terraformrc` file in your home directory and applie
 provider_installation {
 
   dev_overrides {
-      "registry.terraform.io/github.com/{{ cookiecutter.github_username }}/terraform-provider-{{ cookiecutter.cloud_provider.lower().replace(' ', '-') }}/scaffolding" = "<PATH>"
+      "{{ cookiecutter.github_username }}/{{ cookiecutter.cloud_provider.lower().replace(' ', '-') }}" = "<PATH>"
   }
 
   # For all other providers, install them directly from their origin provider
