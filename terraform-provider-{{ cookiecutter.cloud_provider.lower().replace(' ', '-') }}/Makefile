@@ -128,3 +128,5 @@ $(DOCS) &: $(SPEAKEASY_FILES) | files.gen
 	sed -i 's/{{ cookiecutter.cloud_provider.lower().replace(' ', '-') }} Provider/{{ cookiecutter.cloud_provider }} Provider/' docs/index.md
 
 generate: $(GENERATED)
+
+-include {{ cookiecutter.cloud_provider.lower().replace(' ', '-') }}.mk
