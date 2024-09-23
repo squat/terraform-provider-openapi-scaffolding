@@ -1,10 +1,10 @@
-configVersion: 1.0.0
+configVersion: 2.0.0
 generation:
-  comments: {}
-  sdkClassName: SDK
-  repoURL: https://github.com/{{ cookiecutter.github_username }}/terraform-provider-{{ cookiecutter.cloud_provider.lower().replace(' ', '-') }}.git
+  sdkClassName: {{ cookiecutter.cloud_provider.lower().replace(' ', '-') }}
   usageSnippets:
     optionalPropertyRendering: withExample
+  auth:
+    OAuth2ClientCredentialsEnabled: true
 features:
   terraform:
     constsAndDefaults: 0.1.1
@@ -15,15 +15,4 @@ features:
 terraform:
   version: {{ cookiecutter.version }}
   author: {{ cookiecutter.github_username }}
-  imports:
-    option: openapi
-    paths:
-      callbacks: callbacks
-      errors: sdkerrors
-      operations: operations
-      shared: shared
-      webhooks: webhooks
-  inputModelSuffix: input
-  outputModelSuffix: output
   packageName: {{ cookiecutter.cloud_provider.lower().replace(' ', '-') }}
-  repoSubDirectory: .

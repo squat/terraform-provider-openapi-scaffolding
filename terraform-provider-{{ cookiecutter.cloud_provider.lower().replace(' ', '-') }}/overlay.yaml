@@ -1,0 +1,8 @@
+overlay: 1.0.0
+info:
+  title: {{ cookiecutter.cloud_provider }} Provider Overlay
+  version: {{ cookiecutter.version }}
+actions:
+  - target: $["info"]["title"]
+    update: {{ cookiecutter.cloud_provider }} Provider
+

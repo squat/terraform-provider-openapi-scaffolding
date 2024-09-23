@@ -113,7 +113,7 @@ deps:
 
 $(SPEAKEASY_BINARY):
 	mkdir -p $(@D)
-	cd $(@D) && curl https://github.com/speakeasy-api/speakeasy/releases/download/v1.129.1/speakeasy_$(OS)_$(ARCH).zip -L -o speakeasy.zip && unzip -o speakeasy.zip $(@F) && rm speakeasy.zip ; chmod +x $(@F)
+	cd $(@D) && curl https://github.com/speakeasy-api/speakeasy/releases/download/v1.402.0/speakeasy_$(OS)_$(ARCH).zip -L -o speakeasy.zip && unzip -o speakeasy.zip $(@F) && rm speakeasy.zip ; chmod +x $(@F)
 
 {{ cookiecutter.cloud_provider.lower().replace(' ', '-') }}.yaml: patch.sh
 	curl {{ cookiecutter.openapi_specification_url }} | sh patch.sh > $@
