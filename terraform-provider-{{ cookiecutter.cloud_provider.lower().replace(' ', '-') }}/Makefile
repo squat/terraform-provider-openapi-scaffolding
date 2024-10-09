@@ -22,8 +22,11 @@ DIRTY := $(shell test -z "$$(git diff --shortstat 2>/dev/null)" || echo -dirty)
 VERSION := $(VERSION)$(DIRTY)
 LD_FLAGS := -ldflags "-X main.Version=$(VERSION) -extldflags -static"
 GO_FILES := $(shell find . -name '*.go')
+ifeq ($(GO_FILES),)
+GO_FILES := main.go
+endif
 GO_PKGS := $(shell go list ./...)
-SPEAKEASY_FILES := main.go go.mod go.sum
+SPEAKEASY_FILES := go.mod go.sum $(GO_FILES)
 DOCS := $(shell find docs -type f -name '*.md')
 ifeq ($(DOCS),)
 DOCS := docs/index.md
