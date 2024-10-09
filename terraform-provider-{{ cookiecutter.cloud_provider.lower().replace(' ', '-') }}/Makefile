@@ -1,6 +1,7 @@
 export GO111MODULE=on
 .PHONY: clean deps fmt generate lint test unit
 
+SHELL := /bin/bash
 ARCH ?= amd64
 OS ?= linux
 ALL_ARCH := amd64 arm arm64
