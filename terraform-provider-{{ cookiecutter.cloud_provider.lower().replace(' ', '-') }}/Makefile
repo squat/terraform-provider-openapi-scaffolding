@@ -22,12 +22,12 @@ VERSION := $(VERSION)$(DIRTY)
 LD_FLAGS := -ldflags "-X main.Version=$(VERSION) -extldflags -static"
 GO_FILES := $(shell find . -name '*.go')
 GO_PKGS := $(shell go list ./...)
-SPEAKEASY_FILES := $(shell cat files.gen)
+SPEAKEASY_FILES := main.go go.mod go.sum
 DOCS := $(shell find docs -type f -name '*.md')
 ifeq ($(DOCS),)
 DOCS := docs/index.md
 endif
-GENERATED := $(SPEAKEASY_FILES) $(DOCS) files.gen
+GENERATED := $(SPEAKEASY_FILES) $(DOCS)
 
 STATICCHECK_BINARY := go run honnef.co/go/tools/cmd/staticcheck@2023.1.6
 SPEAKEASY_BINARY := bin/speakeasy
@@ -57,7 +57,7 @@ ifeq ($(CONTAINERIZE_BUILD), true)
 	BUILD_SUFIX := '
 endif
 
-$(BINS): $(GO_FILES) go.mod | files.gen
+$(BINS): $(GO_FILES) go.mod
 	@mkdir -p bin/$(ARCH)
 	@echo "building: $@"
 	@$(BUILD_PREFIX) \
@@ -108,8 +108,8 @@ bin-clean:
 	rm -rf bin
 
 deps:
-	go mod tidy
 	go get go@$(GO_VERSION) toolchain@go$(GO_VERSION)
+	go mod tidy
 
 $(SPEAKEASY_BINARY):
 	mkdir -p $(@D)
@@ -118,12 +118,12 @@ $(SPEAKEASY_BINARY):
 {{ cookiecutter.cloud_provider.lower().replace(' ', '-') }}.yaml: overlay.yaml $(SPEAKEASY_BINARY)
 	$(SPEAKEASY_BINARY) overlay apply --overlay overlay.yaml --schema <(curl {{ cookiecutter.openapi_specification_url }}) > $@
 
-$(SPEAKEASY_FILES) files.gen &: {{ cookiecutter.cloud_provider.lower().replace(' ', '-') }}.yaml $(SPEAKEASY_BINARY)
+$(SPEAKEASY_FILES) &: {{ cookiecutter.cloud_provider.lower().replace(' ', '-') }}.yaml $(SPEAKEASY_BINARY)
 	$(SPEAKEASY_BINARY) generate sdk --lang terraform --schema $< --out .
 	$(MAKE) fmt
 	$(MAKE) deps
 
-$(DOCS) &: $(SPEAKEASY_FILES) | files.gen
+$(DOCS) &: $(SPEAKEASY_FILES)
 	go generate
 	sed -i 's/{{ cookiecutter.cloud_provider.lower().replace(' ', '-') }} Provider/{{ cookiecutter.cloud_provider }} Provider/' docs/index.md
 
