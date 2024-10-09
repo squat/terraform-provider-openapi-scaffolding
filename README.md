@@ -24,7 +24,7 @@ Once the template has rendered, change into to the newly created directory:
 cd terraform-provider-cloudprovidername
 ```
 
-Next, edit the `patch.sh` file to annotate the API operations with the necessary [Speakeasy tags](https://www.speakeasyapi.dev/docs/create-terraform#how-it-works-adding-annotations).
+Next, edit the [OpenAPI Overlay](https://github.com/OAI/Overlay-Specification) `overlay.yaml` file to annotate the API operations with the necessary [Speakeasy tags](https://www.speakeasyapi.dev/docs/create-terraform#how-it-works-adding-annotations).
 Finally, export the Speakeasy API key and generate the provider:
 ```sh
 export SPEAKEASY_API_KEY=<your_speakeasy_api_key>
