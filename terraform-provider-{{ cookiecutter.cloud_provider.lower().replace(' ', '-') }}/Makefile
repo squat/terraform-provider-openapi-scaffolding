@@ -36,7 +36,7 @@ GENERATED := $(SPEAKEASY_FILES) $(DOCS)
 STATICCHECK_BINARY := go run honnef.co/go/tools/cmd/staticcheck@2023.1.6
 SPEAKEASY_BINARY := bin/speakeasy
 
-GO_VERSION ?= 1.21.3
+GO_VERSION ?= 1.23.0
 BUILD_IMAGE ?= golang:$(GO_VERSION)-alpine
 
 build: $(BINS)
